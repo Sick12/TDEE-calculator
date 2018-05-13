@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <title>Calculator</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> -->
+</head>
+
+<body>
+    <div id="app">
+        <h1>Calculator</h1>
+
+        <h1>Fill out the form below.</h1>
+        <select v-model="selectedUnit">
+            <option value disabled selected>Select desired units</option>
+            <option v-for="unit in units"> {{ unit }} </option>
+        </select>
+        <select v-model="selectedGender">
+            <option value disabled selected>Select your gender</option>
+            <option v-for="gender in genders">
+                {{ gender }}
+            </option>
+        </select>
+        </label>
+        <span>Age:</span>
+            <input id="age" type="number" placeholder="years" v-model="age">
+
+        <span v-if="selectedUnit == 'US'">(inches)Height:</span>
+        <span v-if="selectedUnit == 'EU'">(Centimeters)Height:</span>
+        <span v-if="selectedUnit == ''">Height:</span>
+        <input id="height" type="number" placeholder="height" v-model="height">
+
+        <span v-if="selectedUnit == 'US'">Weight in pounds:</span>
+        <span v-if="selectedUnit == 'EU'">Weight in kilograms:</span>
+        <span v-if="selectedUnit == ''">Weight:</span>
+        <input id="weight" type="number" placeholder="weight" v-model="weight">
+
+        <button @click="calculateCalories">Calculate</button>
+
+    </div>
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data() {
+                return {
+                    units: [
+                        'US',
+                        'EU'
+                    ],
+                    genders: [
+                        'male',
+                        'female'
+                    ],
+                    selectedGender: '',
+                    selectedUnit: '',
+                    age: 0,
+                    height: 0,
+                    weight: 0
+                }
+            },
+            methods: {
+                calculateCalories(result) {
+                    if (this.selectedGender == 'male' && this.selectedUnit == 'EU') {
+                        let height = this.height * 0.39;
+                        let weight = this.weight / 0.45;
+                        result = 66.47 + (13.75 * weight) + (5.0 * height - (6.75 * this.age));
+                        return console.log(result.toFixed(), 'male EU');
+                    }
+                    if (this.selectedGender == ('female') && this.selectedUnit == 'EU') {
+                        let height = this.height * 0.39;
+                        let weight = this.weight / 0.45;
+                        result = 665.09 + (9.56 * weight) + (1.84 * height - (4.67 * this.age));
+                        return console.log(result.toFixed(), 'female EU');
+                    }
+                    if (this.selectedGender == 'male' && this.selectedUnit == 'US') {
+                        let height = this.height * 2.54;
+                        let weight = this.weight / 2.2;
+                        result = 66.47 + (13.75 * weight) + (5.0 * height - (6.75 * this.age));
+                        return console.log(result.toFixed(), 'male US');
+                    }
+                    if (this.selectedGender == ('female') && this.selectedUnit == 'US') {
+                        let height = this.height * 2.54;
+                        let weight = this.weight / 2.2;
+                        result = 665.09 + (9.56 * weight) + (1.84 * height - (4.67 * this.age));
+                        return console.log(result.toFixed(), 'female US');
+                    }
+                    else {
+                        alert('Invalid options');
+                    }
+
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
